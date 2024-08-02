@@ -27,4 +27,12 @@ public class Doctor {
 
     @Embedded
     private Address address;
+
+    public Doctor(DoctorRegisterData data) {
+        this.name = data.name();
+        this.email = data.email();
+        this.crm = data.crm();
+        this.speciality = data.speciality();
+        this.address = new Address(data.address());
+    }
 }
