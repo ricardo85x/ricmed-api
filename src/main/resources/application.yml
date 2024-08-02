@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: api
+  datasource:
+    url: jdbc:mysql://localhost/ricmed_api
+    username: ricmed
+    password: password
+
+
