@@ -5,5 +5,10 @@ spring:
     url: jdbc:mysql://localhost/ricmed_api
     username: ricmed
     password: password
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
 
