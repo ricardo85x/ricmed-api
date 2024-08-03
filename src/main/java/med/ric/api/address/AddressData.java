@@ -1,4 +1,20 @@
 package med.ric.api.address;
 
-public record AddressData(String street, String neighborhood, String zipCode, String city, String state, String addressDetails, String number) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
+public record AddressData(
+        @NotBlank
+        String street,
+        @NotBlank
+        String neighborhood,
+        @NotBlank
+        @Pattern(regexp =  "\\d{8}")
+        String zipCode,
+        @NotBlank
+        String city,
+        @NotBlank
+        String state,
+        String addressDetails,
+        String number) {
 }
