@@ -1,4 +1,4 @@
-package med.ric.api.patient;
+package med.ric.api.domain.patient;
 
 public record PatientListData(Long id, String name, String email, String cpf) {
     public PatientListData(Patient patient) {

@@ -1,6 +1,6 @@
-package med.ric.api.patient;
+package med.ric.api.domain.patient;
 
-import med.ric.api.address.Address;
+import med.ric.api.domain.address.Address;
 
 public record PatientDetailsData(
     Long id,

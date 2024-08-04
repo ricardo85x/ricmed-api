@@ -1,7 +1,11 @@
 package med.ric.api.controller;
 
 import jakarta.validation.Valid;
-import med.ric.api.patient.*;
+import med.ric.api.domain.patient.Patient;
+import med.ric.api.domain.patient.PatientDetailsData;
+import med.ric.api.domain.patient.PatientListData;
+import med.ric.api.domain.patient.PatientRepository;
+import med.ric.api.domain.patient.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

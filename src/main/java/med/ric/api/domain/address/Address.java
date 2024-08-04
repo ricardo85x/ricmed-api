@@ -1,4 +1,4 @@
-package med.ric.api.address;
+package med.ric.api.domain.address;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package med.ric.api.patient;
+package med.ric.api.domain.patient;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

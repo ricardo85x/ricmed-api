@@ -1,7 +1,7 @@
-package med.ric.api.doctor;
+package med.ric.api.domain.doctor;
 
 import jakarta.validation.constraints.NotNull;
-import med.ric.api.address.AddressData;
+import med.ric.api.domain.address.AddressData;
 
 public record DoctorUpdateData(
         @NotNull
