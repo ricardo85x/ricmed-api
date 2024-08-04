@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import med.ric.api.domain.address.AddressData;
 
 public record DoctorRegisterData(
-        @NotBlank
+        @NotBlank(message = "Name is required")
         String name,
         @NotBlank
         @Email
