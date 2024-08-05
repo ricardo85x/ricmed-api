@@ -3,8 +3,8 @@ spring:
     name: api
   datasource:
     url: jdbc:mysql://localhost/ricmed_api
-    username: ricmed
-    password: password
+    username: ${MYSQL_USER:ricmed}
+    password: ${MYSQL_PASSWORD:password}
   jpa:
     show-sql: true
     properties:
@@ -13,5 +13,10 @@ spring:
 server:
   error:
     include-stacktrace: never
+
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET:12345678}
 
 
