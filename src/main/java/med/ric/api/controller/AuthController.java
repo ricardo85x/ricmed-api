@@ -2,6 +2,9 @@ package med.ric.api.controller;
 
 import jakarta.validation.Valid;
 import med.ric.api.domain.user.AuthData;
+import med.ric.api.domain.user.User;
+import med.ric.api.infra.security.TokenData;
+import med.ric.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,11 +21,16 @@ public class AuthController {
     @Autowired
     private AuthenticationManager manager;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
-    public ResponseEntity doLogin(@RequestBody @Valid AuthData data) {
+    public ResponseEntity<TokenData> doLogin(@RequestBody @Valid AuthData data) {
         var token = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var authentication = manager.authenticate(token);
-
-      return ResponseEntity.ok().build();
+        var jwt = tokenService.generateToken((User) authentication.getPrincipal());
+        return ResponseEntity.ok(new TokenData(jwt));
    }
+
+
 }
