@@ -1,11 +1,14 @@
 package med.ric.api.domain.appointment;
 
 import med.ric.api.domain.CustomValidationException;
+import med.ric.api.domain.appointment.validations.ScheduleAppointmentValidatorInterface;
 import med.ric.api.domain.doctor.Doctor;
 import med.ric.api.domain.doctor.DoctorRepository;
 import med.ric.api.domain.patient.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ScheduleAppointmentService {
@@ -19,7 +22,10 @@ public class ScheduleAppointmentService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public void schedule(ScheduleAppointmentData data) {
+    @Autowired
+    private List<ScheduleAppointmentValidatorInterface> validators;
+
+    public DetailsAppointmentData schedule(ScheduleAppointmentData data) {
 
         if(!patientRepository.existsById(data.patientId())){
             throw new CustomValidationException("Patient not found");
@@ -29,10 +35,18 @@ public class ScheduleAppointmentService {
             throw new CustomValidationException("Doctor not found");
         }
 
+        validators.forEach(validator -> validator.validate(data));
+
         var patient = patientRepository.getReferenceById(data.patientId());
         var doctor = chooseDoctor(data);
+        if(doctor == null){
+            throw new CustomValidationException("Doctor with this specialty is not available at this time");
+        }
+
         var appointment = new Appointment(null, doctor, patient, data.date());
         appointmentRepository.save(appointment);
+
+        return new DetailsAppointmentData(appointment);
     }
 
     private Doctor chooseDoctor(ScheduleAppointmentData data) {
