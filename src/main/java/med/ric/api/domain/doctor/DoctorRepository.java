@@ -11,11 +11,11 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     Page<Doctor> findAllByActiveTrue(Pageable pagination);
 
     @Query("""
-            SELECT d FROM Doctor d 
-            WHERE  d.active = true 
-            AND d.speciality = :speciality 
-            AND m.id not in (
-                select a.doctor_id from Appointment a 
+            SELECT d FROM Doctor d
+            WHERE  d.active = true
+            AND d.speciality = :speciality
+            AND d.id not in (
+                select a.doctor.id from Appointment a
                 where a.date = :date
             )
             ORDER by rand()
