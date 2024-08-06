@@ -16,7 +16,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
             AND d.speciality = :speciality
             AND d.id not in (
                 select a.doctor.id from Appointment a
-                where a.date = :date
+                where a.date = :date and a.canceled = false
             )
             ORDER by rand()
             LIMIT 1

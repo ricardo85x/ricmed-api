@@ -1,4 +1,4 @@
-package med.ric.api.domain.appointment.validations;
+package med.ric.api.domain.appointment.validations.schedule;
 
 import med.ric.api.domain.CustomValidationException;
 import med.ric.api.domain.appointment.ScheduleAppointmentData;
