@@ -1,5 +1,7 @@
 package med.ric.api.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.ric.api.domain.patient.Patient;
 import med.ric.api.domain.patient.PatientDetailsData;
@@ -17,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("patients")
+@SecurityRequirement(name = "bearer-key")
 public class PatientController {
 
     @Autowired

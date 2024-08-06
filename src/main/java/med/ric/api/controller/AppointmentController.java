@@ -1,6 +1,7 @@
 package med.ric.api.controller;
 
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.ric.api.domain.appointment.CancelAppointmentData;
 import med.ric.api.domain.appointment.DetailsAppointmentData;
@@ -15,6 +16,7 @@ import java.util.concurrent.CancellationException;
 
 @RestController
 @RequestMapping("/appointments")
+@SecurityRequirement(name = "bearer-key")
 public class AppointmentController {
 
     @Autowired
