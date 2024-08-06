@@ -1,5 +1,6 @@
 package med.ric.api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.ric.api.domain.user.AuthData;
 import med.ric.api.domain.user.User;
