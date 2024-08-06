@@ -1,13 +1,15 @@
 package med.ric.api.domain.appointment;
 
 import med.ric.api.domain.CustomValidationException;
-import med.ric.api.domain.appointment.validations.ScheduleAppointmentValidatorInterface;
+import med.ric.api.domain.appointment.validations.cancel.CancelAppointmentValidatorInterface;
+import med.ric.api.domain.appointment.validations.schedule.ScheduleAppointmentValidatorInterface;
 import med.ric.api.domain.doctor.Doctor;
 import med.ric.api.domain.doctor.DoctorRepository;
 import med.ric.api.domain.patient.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,7 +25,10 @@ public class ScheduleAppointmentService {
     private PatientRepository patientRepository;
 
     @Autowired
-    private List<ScheduleAppointmentValidatorInterface> validators;
+    private List<ScheduleAppointmentValidatorInterface> scheduleValidators;
+
+    @Autowired
+    private List<CancelAppointmentValidatorInterface> cancelValidators;
 
     public DetailsAppointmentData schedule(ScheduleAppointmentData data) {
 
@@ -35,7 +40,7 @@ public class ScheduleAppointmentService {
             throw new CustomValidationException("Doctor not found");
         }
 
-        validators.forEach(validator -> validator.validate(data));
+        scheduleValidators.forEach(validator -> validator.validate(data));
 
         var patient = patientRepository.getReferenceById(data.patientId());
         var doctor = chooseDoctor(data);
@@ -59,5 +64,31 @@ public class ScheduleAppointmentService {
         }
 
         return doctorRepository.findRandomAvailableDoctorBySpecialty(data.date(), data.speciality());
+    }
+
+    public void cancel(CancelAppointmentData data) {
+        var foundAppointment = appointmentRepository.findById(data.appointmentId());
+
+        if(foundAppointment.isEmpty()){
+            throw new CustomValidationException("Appointment not found");
+        }
+
+        var appointment = foundAppointment.get();
+
+        cancelValidators.forEach(validator -> {
+            System.out.println("E ai?");
+            System.out.println(validator.getClass().getName());
+            validator.validate(appointment);
+        });
+
+        if (data.reason() == null) {
+            throw new CustomValidationException("Reason is required to cancel appointment");
+        }
+
+        appointment.setCanceled(true);
+        appointment.setCanceledAt(LocalDateTime.now());
+        appointment.setCanceledReason(data.reason());
+        appointmentRepository.save(appointment);
+
     }
 }

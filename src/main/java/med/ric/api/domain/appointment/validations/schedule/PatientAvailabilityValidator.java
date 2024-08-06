@@ -1,4 +1,4 @@
-package med.ric.api.domain.appointment.validations;
+package med.ric.api.domain.appointment.validations.schedule;
 
 import med.ric.api.domain.CustomValidationException;
 import med.ric.api.domain.appointment.ScheduleAppointmentData;
@@ -15,7 +15,7 @@ public class PatientAvailabilityValidator implements ScheduleAppointmentValidato
 
         var firstHour = data.date().withHour(7);
         var lastHour = data.date().withHour(18);
-        var hasAppointment = appointmentRepository.existsByPatientIdAndDateBetween(data.patientId(), firstHour, lastHour);
+        var hasAppointment = appointmentRepository.existsByCanceledFalseAndPatientIdAndDateBetween(data.patientId(), firstHour, lastHour);
 
         if (hasAppointment) {
             throw new CustomValidationException("Patient already has an appointment at this day");
