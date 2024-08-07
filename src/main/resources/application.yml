@@ -2,7 +2,7 @@ spring:
   application:
     name: api
   datasource:
-    url: jdbc:mysql://localhost/ricmed_api
+    url: jdbc:mysql://localhost/${MYSQL_DATABASE:ricmed_api}
     username: ${MYSQL_USER:ricmed}
     password: ${MYSQL_PASSWORD:password}
   jpa:
